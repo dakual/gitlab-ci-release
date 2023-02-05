@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+        image: <CI_REGISTRY_IMAGE>:<CI_COMMIT_SHORT_SHA>
         imagePullPolicy: Always
         env:
         - name: PORT
