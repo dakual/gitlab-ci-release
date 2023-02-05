@@ -19,8 +19,7 @@ stages:
 cache:
   paths:
     - node_modules/
-tags:
-  - ${RUNNER_TAGS}
+
 
 "Build Application":
   <<: *non-release 
