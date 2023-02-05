@@ -37,18 +37,18 @@ cache:
   script:
       - cd app && npm run test
 
-"Build Container":
-  <<: *non-release 
-  stage: package
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
+# "Build Container":
+#   <<: *non-release 
+#   stage: package
+#   image: docker:latest
+#   services:
+#     - docker:dind
+#   before_script:
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#   script:
+#     - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+#     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+#     - docker push $CI_REGISTRY_IMAGE:latest
 
 # "Package Release":
 #   <<: *non-release 
@@ -87,6 +87,7 @@ cache:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   before_script: 
+    - echo $USER
     - apt-get install gettext -y
     - kubectl config get-contexts
     - kubectl config use-context dakual/gitlab-ci-release:dev
