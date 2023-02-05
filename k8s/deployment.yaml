@@ -25,8 +25,6 @@ spec:
       - name: node-app
         image: <IMAGE>:<TAG>
         imagePullPolicy: Always
-        imagePullSecrets:
-          - name: registry-key
         env:
         - name: PORT
           value: "9000"
@@ -37,6 +35,8 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+      imagePullSecrets:
+        - name: registry-key
 ---
 kind: Service
 apiVersion: v1
