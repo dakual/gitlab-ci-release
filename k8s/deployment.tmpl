@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app
+  namespace: default
+  labels:
+    app: node-app
+spec:
+  selector:
+    matchLabels:
+      app: node-app
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+        imagePullPolicy: Always
+        env:
+        - name: PORT
+          value: "9000"
+        ports:
+        - name: http
+          containerPort: 9000
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-app
+  namespace: default
+spec:
+  selector:
+    app: node-app
+  ports:
+    - name: http
+      port: 9000
+      targetPort: 9000
+      protocol: TCP
+
