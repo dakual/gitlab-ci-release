@@ -86,7 +86,7 @@ cache:
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
-  before_script: 
+  script: 
     - kubectl config get-contexts
     - kubectl config use-context dakual/gitlab-ci-release:dev
   rules:
