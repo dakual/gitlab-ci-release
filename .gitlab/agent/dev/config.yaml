@@ -6,4 +6,4 @@ gitops:
 
 ci_access:
   projects:
-    - id: dakual/gitlab-ci-downstream
+    - id: dakual/gitlab-ci-helm
