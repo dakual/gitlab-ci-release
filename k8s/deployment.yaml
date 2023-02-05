@@ -25,6 +25,8 @@ spec:
       - name: node-app
         image: <IMAGE>:<TAG>
         imagePullPolicy: Always
+        imagePullSecrets:
+          - name: registry-key
         env:
         - name: PORT
           value: "9000"
