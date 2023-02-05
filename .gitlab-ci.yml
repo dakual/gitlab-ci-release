@@ -86,6 +86,8 @@ cache:
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
+  variables:
+    USER: 1001
   before_script: 
     - apt-get update
     - apt-get install gettext -y
