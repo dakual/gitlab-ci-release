@@ -87,7 +87,7 @@ cache:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   before_script: 
-    - usermod -aG root gitlab-runner 
+    - apt-get update
     - apt-get install gettext -y
     - kubectl config get-contexts
     - kubectl config use-context dakual/gitlab-ci-release:dev
