@@ -1,0 +1,94 @@
+variables:
+  RUNNER_TAGS: docker
+
+stages:
+  - build
+  - test
+  - package
+  - release
+  - deploy:dev
+  - deploy:staging
+  - deploy:prod
+
+
+.non-release: &non-release
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: always
+cache:
+  paths:
+    - node_modules/
+tags:
+  - ${RUNNER_TAGS}
+
+"Build Application":
+  <<: *non-release 
+  image: node:8.11-alpine
+  stage: build
+  script:
+    - npm install
+
+"Test Application":
+  <<: *non-release 
+  stage: test
+  image: node:8.11-alpine
+  script:
+      - npm run test
+
+"Build Container":
+  <<: *non-release 
+  stage: package
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+"Package Release":
+  <<: *non-release 
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  script:
+    - >
+      release-cli create --name $CI_COMMIT_BRANCH --description $CI_COMMIT_BRANCH-$CI_JOB_ID
+      --tag-name $CI_COMMIT_BRANCH --ref $CI_COMMIT_SHA
+      --assets-link "{\"name\":\"Docker Container\",\"url\":\"https://${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}\"}"
+  environment:
+    name: release
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /v\d.+/'
+      when: manual
+    - when: never
+
+.deploy-job:
+  image: node:8.11-alpine
+  script: "echo 'Deploy to Environment'"
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: manual
+    - if: '$FORCE_DEPLOY == "true"'
+      when: manual
+  tags:
+    - ${RUNNER_TAGS}
+
+"Deploy To Dev":
+  extends: .deploy-job
+  stage: deploy:dev
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: always
+    - if: '$FORCE_DEPLOY == "true"'
+      when: always
+
+"Deploy To Staging":
+  extends: .deploy-job
+  stage: deploy:staging
+
+"Deploy To Prod":
+  extends: .deploy-job
+  stage: deploy:prod
