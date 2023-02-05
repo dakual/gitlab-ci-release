@@ -84,13 +84,10 @@ cache:
 
 .deploy-job:
   image:
-    name: bitnami/kubectl:latest
+    name: alpine/k8s:1.26.0
     entrypoint: ['']
-  variables:
-    USER: 1001
   before_script: 
-    - apt-get update
-    - apt-get install gettext -y
+    - apk add --update --no-cache gettext
     - kubectl config get-contexts
     - kubectl config use-context dakual/gitlab-ci-release:dev
   script: 
