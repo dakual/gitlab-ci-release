@@ -86,10 +86,6 @@ cache:
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
-  before_script: 
-    - apt-get install gettext -y
-    - kubectl config get-contexts
-    - kubectl config use-context dakual/gitlab-ci-release:dev
   rules:
     - if: $CI_COMMIT_TAG
       when: manual
@@ -101,6 +97,10 @@ cache:
 "Deploy To Dev":
   extends: .deploy-job
   stage: deploy:dev
+  before_script: 
+    - apt-get install gettext -y
+    - kubectl config get-contexts
+    - kubectl config use-context dakual/gitlab-ci-release:dev
   script:
     - envsubst < k8s/deployment.tmpl > k8s/deployment.yaml
     - kubectl apply -f k8s/deployment.yaml --record
