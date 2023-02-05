@@ -1,8 +1,13 @@
 {
-  "name": "app",
+  "name": "node-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is demo Nodejs app!",
+  "private": true,
   "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:dakual/gitlab-ci-release.git"
+  },
   "scripts": {
     "start": "node app.js",
     "test": "echo \"ok\" && exit 0"

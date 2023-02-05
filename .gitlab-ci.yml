@@ -28,14 +28,14 @@ cache:
   image: node:8.11-alpine
   stage: build
   script:
-    - npm install
+    - cd app && npm install
 
 "Test Application":
   <<: *non-release 
   stage: test
   image: node:8.11-alpine
   script:
-      - npm run test
+      - cd app && npm run test
 
 "Build Container":
   <<: *non-release 
