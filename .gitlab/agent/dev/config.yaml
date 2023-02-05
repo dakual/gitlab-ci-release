@@ -4,6 +4,3 @@ gitops:
     paths:
     - glob: '/**/*.{yaml,yml,json}'
 
-ci_access:
-  projects:
-    - id: dakual/gitlab-ci-helm
