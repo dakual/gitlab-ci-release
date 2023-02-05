@@ -87,6 +87,7 @@ cache:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   script: 
+    - apt-get install gettext -y
     - kubectl config get-contexts
     - kubectl config use-context dakual/gitlab-ci-release:dev
   rules:
