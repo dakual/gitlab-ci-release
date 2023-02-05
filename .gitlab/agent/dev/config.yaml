@@ -1,6 +1,0 @@
-gitops:
-  manifest_projects:
-  - id: dakual/gitlab-ci-release
-    paths:
-    - glob: '/**/*.{yaml,yml,json}'
-
