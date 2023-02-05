@@ -84,7 +84,7 @@ cache:
 
 .deploy-job:
   image:
-    name: alpine/k8s:1.26.0
+    name: gcr.io/cloud-builders/kubectl:latest
     entrypoint: ['']
   before_script: 
     - apk add --update --no-cache gettext
