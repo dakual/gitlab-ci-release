@@ -88,7 +88,7 @@ cache:
     entrypoint: ['']
   before_script: 
     - kubectl config get-contexts
-    - kubectl config use-context dakual/gitlab-ci-helm:dev
+    - kubectl config use-context dakual/gitlab-ci/gitlab-ci-helm:dev
   script: 
     - "echo 'Deploy to Environment'"
   rules:
