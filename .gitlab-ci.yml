@@ -110,7 +110,7 @@ cache:
   extends: .deploy-job
   stage: deploy:staging
   script:
-    - kubectl apply -f k8s/deployment.yaml kubectl --namespace=staging
+    - kubectl apply -f k8s/deployment.yaml --namespace=staging
   dependencies:
     - "Deploy To Dev"
 
@@ -119,6 +119,6 @@ cache:
   extends: .deploy-job
   stage: deploy:prod
   script:
-    - kubectl apply -f k8s/deployment.yaml kubectl --namespace=prod
+    - kubectl apply -f k8s/deployment.yaml --namespace=prod
   dependencies:
     - "Deploy To Dev"
