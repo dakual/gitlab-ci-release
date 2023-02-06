@@ -3,3 +3,15 @@ docker run --rm -v $(PWD)/app:/app -w /app node:8.11-alpine npm install express
 docker run --rm -v $(PWD)/app:/app -w /app node:8.11-alpine npm install mocha chai chai-http --save-dev
 
 docker run --rm -v $(PWD)/app:/app -w /app -p 8080:8080 node:8.11-alpine npm start
+
+
+
+kubectl create secret docker-registry registry-key \
+  --docker-server=registry.gitlab.com \
+  --docker-username=dakual \
+  --docker-password=glpat-Xk3sXBnoMAcDZPReqQM5
+
+kubectl create secret docker-registry registry-key \
+--docker-server=registry.gitlab.com \
+--docker-username=minikube \
+--docker-password=UUXq1BFw1zy4JpTysMsL
