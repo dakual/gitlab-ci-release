@@ -93,7 +93,7 @@ cache:
   extends: .deploy-job
   stage: deploy:dev
   script:
-    - sh -c "sed -i -e 's|<IMAGE>|${CI_REGISTRY_IMAGE}|g' -e 's|<TAG>|${CI_COMMIT_SHORT_SHA}|g' k8s/deployment.yaml"
+    - sh -c "sed -i -e 's|<IMAGE>|${CI_REGISTRY_IMAGE}|g' -e 's|<TAG>|${CI_COMMIT_TAG}|g' k8s/deployment.yaml"
     - kubectl apply -f k8s/deployment.yaml
   artifacts:
     paths:
