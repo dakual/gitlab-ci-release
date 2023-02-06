@@ -97,7 +97,7 @@ cache:
   stage: deploy:dev
   script:
     - sh -c "sed -i -e 's|<IMAGE>|${CI_REGISTRY_IMAGE}|g' -e 's|<TAG>|${CI_COMMIT_TAG}|g' k8s/deployment.yaml"
-    - kubectl apply -f k8s/deployment.yaml kubectl --namespace=dev
+    - kubectl apply -f k8s/deployment.yaml --namespace=dev
   artifacts:
     paths:
       - k8s/deployment.yaml
