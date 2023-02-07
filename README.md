@@ -14,4 +14,10 @@ kubectl create secret docker-registry registry-key \
 kubectl create secret docker-registry registry-key \
 --docker-server=registry.gitlab.com \
 --docker-username=minikube \
---docker-password=UUXq1BFw1zy4JpTysMsL
+--docker-password=UUXq1BFw1zy4JpTysMsL \
+--namespace=dev
+
+
+kubectl get secret registry-key --namespace=default -o yaml | grep -v '^\s*namespace:\s' | kubectl apply --namespace=dev -f -
+kubectl get secret registry-key --namespace=default -o yaml | grep -v '^\s*namespace:\s' | kubectl apply --namespace=staging -f -
+kubectl get secret registry-key --namespace=default -o yaml | grep -v '^\s*namespace:\s' | kubectl apply --namespace=prod -f -
