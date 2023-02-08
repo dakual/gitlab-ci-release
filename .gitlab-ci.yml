@@ -6,6 +6,7 @@ stages:
   - test
   - package
   - release
+  - deploy
   - deploy:dev
   - deploy:staging
   - deploy:prod
@@ -57,6 +58,7 @@ cache:
     - when: never
 
 deploy_review:
+  <<: *non-release 
   stage: deploy
   script:
     - echo "Add script here that deploys the code to your infrastructure"
